@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.active.line2 {
+  visibility: hidden;
+}
+.active.line3 {
+  width: 25px;
+  transform: translateY(-14px) rotate(45deg);
+}
+.active.line1 {
+  transform: rotate(-45deg);
+}
+
+.btn-search {
+  pointer-events: painted;
+  position: absolute;
+  right: 0px;
+}
+.desktop-search {
+  border: 1px solid gray;
+}
+.desktop-search::placeholder {
+  padding-left: 0.5rem;
+  font-size: 12px;
+}
+
+.desktop-search:focus {
+  width: 200px;
+  background-color: transparent;
+  padding-left: 1rem;
+  border: 1px solid gray;
+  transition: all 200ms ease-out;
+  outline: none;
+}
+.orange-links li {
+  position: relative;
+}
+.orange-links li::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background-color: rgb(253, 60, 51);
+}
+.orange-links li:hover::before {
+  width: 100%;
+}
+
+.footer__headings {
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 0;
+}
+.footer__headings::before {
+  content: "";
+  position: absolute;
+  background-color: rgb(253, 60, 51);
+  width: 25px;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+}
+.footer__headings::after {
+  content: "";
+  position: absolute;
+  background-color: rgb(253, 60, 51);
+  width: 15px;
+  bottom: -6px;
+  left: 0;
+  height: 2px;
+}
+.sign-up-title {
+  position: relative;
+}
+.sign-up-title::before {
+  content: "";
+  width: 55px;
+  height: 4px;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  background-color: rgb(253, 60, 51);
+}
+
+@media screen and (max-width: 308px) {
+  .fixedByQuerie {
+    padding-bottom: 6rem;
+  }
+}
