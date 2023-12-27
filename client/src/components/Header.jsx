@@ -15,7 +15,6 @@ const Header = () => {
   const isMobile = useMediaQuery({ query: `(max-width:700px)` });
   const [menuClicked, setMenuClicked] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
-  console.log(isSearch);
 
   const handleMenuClick = () => {
     if (menuClicked) {
