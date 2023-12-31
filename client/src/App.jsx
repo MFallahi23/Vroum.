@@ -1,6 +1,3 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./pages/Home";
@@ -10,6 +7,11 @@ import Search from "./pages/Search";
 import Footer from "./components/Footer";
 import About from "./pages/About";
 import Blog from "./pages/Blog";
+import PrivateRoute from "./components/PrivateRoute";
+import Profile from "./pages/Profile";
+import ProfileEdit from "./pages/ProfileEdit";
+import ProfileSetting from "./pages/ProfileSetting";
+import ProfilePosts from "./pages/ProfilePosts";
 
 function App() {
   return (
@@ -22,6 +24,14 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+        <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile />}>
+            <Route index element={<ProfileEdit />} />
+            <Route path="profile/edit" element={<ProfileEdit />} />
+            <Route path="profile/posts" element={<ProfilePosts />} />
+            <Route path="profile/settings" element={<ProfileSetting />} />
+          </Route>
+        </Route>
       </Routes>
       <Footer />
     </BrowserRouter>

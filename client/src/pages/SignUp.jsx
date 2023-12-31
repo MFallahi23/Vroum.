@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { VscError } from "react-icons/vsc";
 import { FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
+import Oauth from "../components/Oauth";
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -13,6 +14,9 @@ const SignUp = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
 
+  const setGoogleError = (error) => {
+    setError("Could not sign in with google: " + error);
+  };
   // Handle form changes
   const handleForm = (e) => {
     setForm({
@@ -24,6 +28,7 @@ const SignUp = () => {
   // Handle Submit
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     setError(null);
     setSuccess(false);
     try {
@@ -32,16 +37,18 @@ const SignUp = () => {
           "Content-Type": "application/json",
         },
       });
-      const statusCode = res.status;
       const data = res.data;
       console.log(data);
       if (data.success === "false") {
+        setLoading(false);
         setError(data.message);
         return;
       }
+      setLoading(false);
       setSuccess(true);
       navigate("/sign-in");
     } catch (error) {
+      setLoading(false);
       setError(error.message);
     }
   };
@@ -108,14 +115,20 @@ const SignUp = () => {
               />
             </label>
           </div>
-          <button className="p-2 bg-myOrange text-white uppercase text-lg hover:opacity-80 disabled:opacity-55">
-            Sign Up
+          <button
+            disabled={loading}
+            className="p-2 bg-myOrange text-white uppercase text-lg hover:opacity-80 disabled:opacity-55"
+          >
+            {loading ? "Signing up..." : "Sign Up"}
           </button>
-          <div className="flex gap-2">
-            <p>Already have an account? </p>
-            <Link className=" text-myYellow underline" to={"/sign-in"}>
-              Sign In
-            </Link>
+          <div className=" flex justify-between items-center">
+            <div className="flex gap-2">
+              <p>Already have an account? </p>
+              <Link className=" text-myYellow underline" to={"/sign-in"}>
+                Sign In
+              </Link>
+            </div>
+            <Oauth error={setGoogleError} />
           </div>
         </form>
       </div>

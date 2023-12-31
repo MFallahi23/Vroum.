@@ -55,3 +55,60 @@ export const signin = async (req, res, next) => {
     next(error);
   }
 };
+
+export const google = async (req, res, next) => {
+  try {
+    const { username, email, avatar } = req.body;
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = user._doc;
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
+        })
+        .status(200)
+        .json(rest);
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcryptjs.hash(generatedPassword, 10);
+      const modifiedUsername =
+        username.split(" ").join("").toLowerCase() +
+        Math.random().toString(36).slice(-4);
+
+      const newUser = new User({
+        username: modifiedUsername,
+        email,
+        password: hashedPassword,
+        avatar,
+      });
+      await newUser.save();
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET);
+      const { password: pass, ...rest } = newUser._doc;
+      res
+        .cookie("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production" ? true : false,
+        })
+        .status(200)
+        .json(rest);
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const signOut = (req, res, next) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json({
+      success: true,
+      message: "Logged Out Successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};

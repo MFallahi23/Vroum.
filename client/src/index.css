@@ -99,3 +99,18 @@
     padding-bottom: 6rem;
   }
 }
+
+.active {
+  position: relative;
+  background-color: rgba(229 231 235);
+}
+.active::before {
+  content: "";
+  width: 5px;
+  height: 100%;
+  position: absolute;
+  background: rgb(253, 60, 51);
+  left: -8px;
+  border-radius: 5px;
+  top: 0;
+}
