@@ -32,7 +32,7 @@ app.use(helmet());
 
 // routes
 app.use("/api/auth", authRouter);
-
+app.use("/api/user", userRouter);
 // Error handling middleware
 app.use((err, data, req, res, next) => {
   const statusCode = err.statusCode || 500;

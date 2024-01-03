@@ -7,22 +7,47 @@ import {
   FaTwitter,
   FaSearch,
 } from "react-icons/fa";
+import { PiSignOutBold } from "react-icons/pi";
+import { CgProfile } from "react-icons/cg";
+
 import { SlSocialVkontakte } from "react-icons/sl";
 import { useDispatch, useSelector } from "react-redux";
 import { useMediaQuery } from "react-responsive";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { disconnect } from "../store/user/userSlice";
 
 const Header = () => {
   const { currentUser } = useSelector((state) => state.user);
   const isMobile = useMediaQuery({ query: `(max-width:700px)` });
   const [menuClicked, setMenuClicked] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
-
+  const [profileClick, setProfileClick] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // Handle menu click
   const handleMenuClick = () => {
     if (menuClicked) {
       setMenuClicked(false);
     } else {
       setMenuClicked(true);
+    }
+  };
+  // Handle Sign out
+  const handleSignOut = async () => {
+    try {
+      const res = await axios.get("/api/auth/signout");
+      const { data } = res;
+      if (data.success === false) {
+        console.log("error during log out");
+        setMenuClicked(false);
+        return;
+      }
+      setMenuClicked(false);
+      dispatch(disconnect());
+      navigate("/");
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -65,22 +90,22 @@ const Header = () => {
             >
               <div
                 className={`line1 w-[25px] h-[3px] bg-myOrange rounded-2xl transition ${
-                  menuClicked ? "active" : ""
+                  menuClicked ? "activeHeader" : ""
                 }`}
               ></div>
               <div
                 className={`line2 w-[20px] h-[3px] bg-myOrange rounded-2xl ${
-                  menuClicked ? "active" : ""
+                  menuClicked ? "activeHeader" : ""
                 }`}
               ></div>
               <div
                 className={`line3 w-[15px] h-[3px] bg-myOrange rounded-2xl transition ${
-                  menuClicked ? "active" : ""
+                  menuClicked ? "activeHeader" : ""
                 }`}
               ></div>
             </div>
           ) : currentUser ? (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 relative">
               <ul
                 className={`flex gap-6 orange-links ${
                   isSearch ? "hidden" : ""
@@ -113,15 +138,46 @@ const Header = () => {
                   onBlur={() => setTimeout(() => setIsSearch(false), 400)}
                 />
               </form>
-              <div className="">
-                <Link to={"/profile"}>
-                  <img
-                    src={currentUser.avatar}
-                    className="h-[40px] w-[40px] rounded-full object-cover hover:opacity-60"
-                    alt="avatar"
-                  />
-                </Link>
+              <div
+                className=" relative cursor-pointer"
+                onClick={() =>
+                  profileClick ? setProfileClick(false) : setProfileClick(true)
+                }
+              >
+                <img
+                  src={currentUser.avatar}
+                  className="h-[40px] w-[40px] rounded-full object-cover hover:opacity-60"
+                  alt="avatar"
+                />
               </div>
+              {profileClick && (
+                <div className="absolute  right-0 top-14">
+                  <div className="relative">
+                    <div className="arrow-up absolute right-2  -top-2"></div>
+                    <div className=" bg-slate-100  p-4 rounded-lg flex flex-col gap-2">
+                      <Link
+                        onClick={() => setProfileClick(false)}
+                        to={"profile/edit"}
+                        className="flex items-center gap-2 p-1 px-4 rounded-lg hover:bg-slate-200"
+                      >
+                        <div className="">
+                          <CgProfile />
+                        </div>
+                        <span>Profile</span>
+                      </Link>
+                      <div
+                        className="flex items-center gap-2 p-1 px-4 rounded-lg border border-red-600 text-red-600 font-semibold cursor-pointer"
+                        onClick={handleSignOut}
+                      >
+                        <div className="">
+                          <PiSignOutBold />
+                        </div>
+                        <span> Sign out</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex items-center gap-6">
@@ -165,7 +221,7 @@ const Header = () => {
           {menuClicked && !currentUser ? (
             <div className="fixed top-0 left-0 w-full h-full  z-10 bg-myWhite flex flex-col pt-48 items-center ">
               <form
-                action="/f"
+                action=""
                 className="search flex items-center gap-1 bg-white border p-3 rounded-lg"
               >
                 <input id="search" type="text" placeholder="search..." />
@@ -253,6 +309,17 @@ const Header = () => {
                     <Link onClick={() => setMenuClicked(false)} to={"/blog"}>
                       Blog
                     </Link>
+                  </li>
+                  <li>
+                    <div
+                      className="flex items-center gap-2 p-1 px-4 rounded-lg border border-red-600 text-red-600 font-semibold cursor-pointer"
+                      onClick={handleSignOut}
+                    >
+                      <div className="">
+                        <PiSignOutBold />
+                      </div>
+                      <span> Sign out</span>
+                    </div>
                   </li>
                 </ul>
               </div>

@@ -27,9 +27,9 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/profile" element={<Profile />}>
             <Route index element={<ProfileEdit />} />
-            <Route path="profile/edit" element={<ProfileEdit />} />
-            <Route path="profile/posts" element={<ProfilePosts />} />
-            <Route path="profile/settings" element={<ProfileSetting />} />
+            <Route path="edit" element={<ProfileEdit />} />
+            <Route path="posts" element={<ProfilePosts />} />
+            <Route path="settings" element={<ProfileSetting />} />
           </Route>
         </Route>
       </Routes>

@@ -8,14 +8,14 @@
   flex-direction: column;
 }
 
-.active.line2 {
+.activeHeader.line2 {
   visibility: hidden;
 }
-.active.line3 {
+.activeHeader.line3 {
   width: 25px;
   transform: translateY(-14px) rotate(45deg);
 }
-.active.line1 {
+.activeHeader.line1 {
   transform: rotate(-45deg);
 }
 
@@ -113,4 +113,63 @@
   left: -8px;
   border-radius: 5px;
   top: 0;
+}
+
+/* Image profile hover effect */
+.profilepic {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: #111;
+}
+.profilepic:hover .profilepic__content {
+  opacity: 1;
+}
+
+.profilepic:hover .profilepic__image {
+  opacity: 0.5;
+}
+.profilepic__image {
+  object-fit: fill;
+  width: 100%;
+  height: 100%;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+.profilepic__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+.profilepic__icon {
+  color: white;
+  padding-bottom: 8px;
+}
+.profilepic__text {
+  text-transform: uppercase;
+  font-size: 14px;
+  width: 50%;
+  text-align: center;
+}
+
+/* Arrow up */
+
+.arrow-up {
+  width: 0;
+  height: 0;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+
+  border-bottom: 15px solid rgb(243 244 246);
 }
