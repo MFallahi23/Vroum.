@@ -9,6 +9,7 @@ import path from "path";
 import cookieParser from "cookie-parser";
 import userRouter from "./routes/user.route.js";
 import authRouter from "./routes/auth.route.js";
+import carRouter from "./routes/car.route.js";
 
 dotenv.config();
 
@@ -33,6 +34,7 @@ app.use(helmet());
 // routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
+app.use("/api/car", carRouter);
 // Error handling middleware
 app.use((err, data, req, res, next) => {
   const statusCode = err.statusCode || 500;

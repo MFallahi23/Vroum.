@@ -12,6 +12,8 @@ import Profile from "./pages/Profile";
 import ProfileEdit from "./pages/ProfileEdit";
 import ProfileSetting from "./pages/ProfileSetting";
 import ProfilePosts from "./pages/ProfilePosts";
+import CreatePost from "./pages/CreatePost";
+import Car from "./pages/Car";
 
 function App() {
   return (
@@ -24,7 +26,10 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
         <Route path="/blog" element={<Blog />} />
+        <Route path="/car/:id" element={<Car />} />
+
         <Route element={<PrivateRoute />}>
+          <Route path="/create-post" element={<CreatePost />} />
           <Route path="/profile" element={<Profile />}>
             <Route index element={<ProfileEdit />} />
             <Route path="edit" element={<ProfileEdit />} />

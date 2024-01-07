@@ -1,6 +1,7 @@
 import { errorHandler } from "../helper/error.js";
 import bcryptjs from "bcryptjs";
 import User from "../models/user.model.js";
+import Car from "../models/car.model.js";
 // UPDATE THE USER
 export const updateUser = async (req, res, next) => {
   if (req.user.id !== req.params.id) {
@@ -41,6 +42,19 @@ export const deleteUser = async (req, res, next) => {
     await User.findByIdAndDelete(req.params.id);
     res.clearCookie("token");
     res.status(200).json("User has been deleted");
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET USER CAR'S
+export const getUserCars = async (req, res, next) => {
+  if (req.user.id !== req.params.id) {
+    return next(errorHandler(401, "You can only view your own publications"));
+  }
+  try {
+    const cars = await Car.find({ userRef: req.params.id });
+    res.status(200).json(cars);
   } catch (error) {
     next(error);
   }

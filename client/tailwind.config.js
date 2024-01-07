@@ -14,6 +14,7 @@ export default {
         myYellow: "rgb(255 ,194, 111)",
         myGray: "rgb(230,230,230)",
         myOtherGray: "rgb(65,73,76)",
+        myGreen: "#8FFD33",
       },
     },
   },
