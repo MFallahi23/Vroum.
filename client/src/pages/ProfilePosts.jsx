@@ -15,7 +15,7 @@ export default function ProfilePosts() {
   const [cars, setCars] = useState([]);
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
-  const isMobile = useMediaQuery({ query: `(max-width:700px)` });
+  const isMobile = useMediaQuery({ query: `(max-width:639px)` });
   // Get user car publication
   const fetchCars = async () => {
     setLoading(true);
