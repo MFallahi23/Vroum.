@@ -23,8 +23,19 @@ const Header = () => {
   const [menuClicked, setMenuClicked] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [profileClick, setProfileClick] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  // Handle submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set("searchTerm", searchTerm);
+    const searchQuery = urlParams.toString();
+    menuClicked ? setMenuClicked(false) : "";
+    navigate(`/search?${searchQuery}`);
+  };
+
   // Handle menu click
   const handleMenuClick = () => {
     if (menuClicked) {
@@ -33,6 +44,13 @@ const Header = () => {
       setMenuClicked(true);
     }
   };
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchTerm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
   // Handle Sign out
   const handleSignOut = async () => {
     try {
@@ -122,7 +140,12 @@ const Header = () => {
                 </li>
               </ul>
 
-              <form action="" name="search" className=" search-box relative">
+              <form
+                action=""
+                name="search"
+                className=" search-box relative"
+                onSubmit={handleSubmit}
+              >
                 <button
                   onClick={() => setIsSearch(true)}
                   type="submit"
@@ -134,6 +157,8 @@ const Header = () => {
                   type="text"
                   className="desktop-search  w-[100px] h-[40px]  bg-transparent rounded-[25px] transition-all duration-500"
                   placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   onFocus={() => setIsSearch(true)}
                   onBlur={() => setTimeout(() => setIsSearch(false), 400)}
                 />
@@ -200,7 +225,12 @@ const Header = () => {
                 </li>
               </ul>
 
-              <form action="" name="search" className=" search-box relative">
+              <form
+                action=""
+                name="search"
+                className=" search-box relative"
+                onSubmit={handleSubmit}
+              >
                 <button
                   onClick={() => setIsSearch(true)}
                   type="submit"
@@ -210,6 +240,8 @@ const Header = () => {
                 </button>
                 <input
                   type="text"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
                   className="desktop-search  w-[100px] h-[40px]  bg-transparent rounded-[25px] transition-all duration-500"
                   placeholder="Search..."
                   onFocus={() => setIsSearch(true)}
@@ -221,18 +253,19 @@ const Header = () => {
           {menuClicked && !currentUser ? (
             <div className="fixed top-0 left-0 w-full h-full  z-10 bg-myWhite flex flex-col pt-48 items-center ">
               <form
-                action=""
+                onSubmit={handleSubmit}
                 className="search flex items-center gap-1 bg-white border p-3 rounded-lg"
               >
-                <input id="search" type="text" placeholder="search..." />
-                <Link
-                  to={`/search`}
-                  onClick={() => {
-                    setMenuClicked(false);
-                  }}
-                >
+                <input
+                  id="search"
+                  type="text"
+                  placeholder="search..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <button>
                   <FaSearch className=" text-myOrange cursor-pointer" />
-                </Link>
+                </button>
               </form>
               <ul className="mt-8 flex flex-col gap-8 w-full items-center text-2xl">
                 <li>
@@ -277,18 +310,19 @@ const Header = () => {
                   </Link>
                 </div>
                 <form
-                  action="/f"
+                  onSubmit={handleSubmit}
                   className="search flex items-center gap-1 bg-white border p-3 rounded-lg"
                 >
-                  <input id="search" type="text" placeholder="search..." />
-                  <Link
-                    to={`/search`}
-                    onClick={() => {
-                      setMenuClicked(false);
-                    }}
-                  >
+                  <input
+                    id="search"
+                    type="text"
+                    placeholder="search..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                  />
+                  <button type="submit">
                     <FaSearch className=" text-myOrange cursor-pointer" />
-                  </Link>
+                  </button>
                 </form>
                 <ul className="mt-8 flex flex-col gap-8 w-full items-center text-2xl">
                   <li>

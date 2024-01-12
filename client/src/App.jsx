@@ -14,6 +14,7 @@ import ProfileSetting from "./pages/ProfileSetting";
 import ProfilePosts from "./pages/ProfilePosts";
 import CreatePost from "./pages/CreatePost";
 import Car from "./pages/Car";
+import UpdatePost from "./pages/UpdatePost";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
 
         <Route element={<PrivateRoute />}>
           <Route path="/create-post" element={<CreatePost />} />
+          <Route path="/update-post/:id" element={<UpdatePost />} />
           <Route path="/profile" element={<Profile />}>
             <Route index element={<ProfileEdit />} />
             <Route path="edit" element={<ProfileEdit />} />

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VscError } from "react-icons/vsc";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+
 import {
   getStorage,
   ref,
@@ -11,7 +12,7 @@ import {
 import { app } from "../firebase";
 import axios from "axios";
 
-const CreatePost = () => {
+const UpdatePost = () => {
   // DATA
   const fuelTypes = ["Gasoline", "Diesel", "Bio-diesel", "Ethanol", "Electric"];
   const engineTypes = [
@@ -55,6 +56,32 @@ const CreatePost = () => {
   const { currentUser } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const params = useParams();
+  // Get user car publication
+  const fetchCars = async () => {
+    setLoading(true);
+    setError(false);
+    try {
+      const carId = params.id;
+      const res = await axios.get(`/api/car/${carId}`);
+      const { data } = res;
+      if (data.success === false) {
+        setError(data.message);
+        setLoading(false);
+        return;
+      }
+      setLoading(false);
+      setForm(data);
+      console.log(data);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCars();
+  }, []);
 
   // HANDLE IMAGE SUBMIT
   const handleImageSubmit = (e) => {
@@ -155,7 +182,7 @@ const CreatePost = () => {
       setLoading(true);
       setError(false);
       const res = await axios.post(
-        "/api/car/create",
+        `/api/car/update/${params.id}`,
         JSON.stringify({
           ...form,
           userRef: currentUser._id,
@@ -450,7 +477,7 @@ const CreatePost = () => {
               disabled={loading || uploading}
               className=" bg-myOrange text-white p-2 rounded-lg hover:opacity-80 disabled:opacity-45 transition"
             >
-              {loading ? "Publishing..." : "Publish"}
+              {loading ? "Updating..." : "Update"}
             </button>
           </div>
         </form>
@@ -459,4 +486,4 @@ const CreatePost = () => {
   );
 };
 
-export default CreatePost;
+export default UpdatePost;

@@ -2,6 +2,7 @@ import express from "express";
 import rateLimitMiddleware from "../middlewares/ratelimit.js";
 import {
   deleteUser,
+  getUser,
   getUserCars,
   updateUser,
 } from "../controllers/user.controller.js";
@@ -15,4 +16,5 @@ router.get("/test", (req, res) => {
 router.post("/update/:id", rateLimitMiddleware, verifyToken, updateUser);
 router.delete("/delete/:id", rateLimitMiddleware, verifyToken, deleteUser);
 router.get("/getcars/:id", verifyToken, getUserCars);
+router.get("/:id", verifyToken, getUser);
 export default router;

@@ -16,6 +16,7 @@ export default function ProfilePosts() {
   const [loading, setLoading] = useState(false);
   const [edit, setEdit] = useState(false);
   const isMobile = useMediaQuery({ query: `(max-width:639px)` });
+  const [changed, setChanged] = useState(true);
   // Get user car publication
   const fetchCars = async () => {
     setLoading(true);
@@ -35,6 +36,26 @@ export default function ProfilePosts() {
       setLoading(false);
     }
   };
+
+  // Delete car publication
+  const deleteCar = async (id) => {
+    try {
+      console.log("start");
+      const res = await axios.delete(`/api/car/delete/${id}`);
+      console.log("hey");
+      const { data } = res;
+      if (data.success === false) {
+        setError(data.message);
+        return;
+      }
+      console.log("top");
+      setCars((prev) => prev.filter((car) => car._id !== id));
+
+      console.log("bottom");
+    } catch (error) {
+      setError(error.message);
+    }
+  };
   useEffect(() => {
     fetchCars();
   }, []);
@@ -50,10 +71,10 @@ export default function ProfilePosts() {
         <div className="flex justify-between p-3">
           <button
             onClick={() => (edit ? setEdit(false) : setEdit(true))}
-            className={`  p-2 px-6 rounded-lg flex items-center gap-2 text-orange-700  transition hover:opacity-70 ${
+            className={`  p-2 px-6 rounded-lg flex items-center gap-2   transition hover:opacity-70 ${
               edit
                 ? "bg-transparent border-2 border-green-500 text-green-500"
-                : "bg-myYellow"
+                : "bg-myYellow text-orange-700"
             }`}
           >
             <div className="text-2xl">
@@ -85,9 +106,9 @@ export default function ProfilePosts() {
                     <img
                       src={car.imageUrls[0]}
                       alt="cover of publication"
-                      className=" w-full  sm:w-32 rounded-lg"
+                      className=" w-full   sm:w-36 sm:h-36 rounded-lg"
                     />
-                    <div className="flex flex-col gap-1 sm:max-w-[300px] p-2">
+                    <div className="flex flex-col gap-1 sm:max-w-[200px] md:max-w-[300px] lg:max-w-[500px] p-2">
                       <div className="flex items-center gap-2">
                         <h1 className="text-3xl capitalize truncate font-semibold  text-myBlack">
                           {car.title}
@@ -109,7 +130,10 @@ export default function ProfilePosts() {
                   </div>
 
                   {edit ? (
-                    <Link className="w-full sm:w-auto p-3">
+                    <Link
+                      to={`/update-post/${car._id}`}
+                      className="w-full sm:w-auto p-3"
+                    >
                       <button className="p-3 mr-2 rounded-md bg-myYellow text-orange-700 flex items-center w-full justify-center hover:opacity-55 gap-2">
                         <FaEdit className="text-xl" />
                         {isMobile ? <span>Edit </span> : ""}
@@ -126,7 +150,10 @@ export default function ProfilePosts() {
                           {isMobile ? <span>View</span> : ""}
                         </button>
                       </Link>
-                      <button className="w-full sm:w-14 p-3 rounded-md flex items-center justify-center  bg-red-100 text-red-500 gap-2">
+                      <button
+                        onClick={() => deleteCar(car._id)}
+                        className="w-full sm:w-14 p-3 rounded-md flex items-center justify-center  bg-red-100 text-red-500 gap-2"
+                      >
                         <MdDelete className=" text-xl" />
                         {isMobile ? <span>Delete</span> : ""}
                       </button>
@@ -134,8 +161,8 @@ export default function ProfilePosts() {
                   )}
                 </div>
               ))}
-            {!cars && (
-              <div className="flex items-center justify-center">
+            {cars.length === 0 && (
+              <div className="flex items-center justify-center h-32">
                 <h1 className="text-xl">You have not posted yet!</h1>
               </div>
             )}
