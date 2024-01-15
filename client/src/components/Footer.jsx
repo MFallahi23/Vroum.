@@ -32,7 +32,7 @@ const Footer = () => {
             </div>
           </div>
           <div className="flex flex-col gap-6 ">
-            <div className="flex flex-col gap-6 border-b pb-8">
+            <div className="flex flex-col gap-6 border-b pb-8 sm:pb-20">
               <h2 className="footer__headings">Our Links</h2>
               <ul>
                 <li>
@@ -40,12 +40,6 @@ const Footer = () => {
                 </li>
                 <li>
                   <Link to={"/about"}>About Us</Link>
-                </li>
-                <li>
-                  <Link to={"/blog"}>Blog</Link>
-                </li>
-                <li>
-                  <Link to={"sign-in"}>Sign In</Link>
                 </li>
               </ul>
             </div>
@@ -55,7 +49,7 @@ const Footer = () => {
                 <div className=" bg-myOrange p-2 rounded-full">
                   <FaPhoneAlt />
                 </div>
-                <p>+7123547484</p>
+                <p>+70000000</p>
               </div>
             </div>
           </div>
@@ -70,13 +64,22 @@ const Footer = () => {
           </p>
           <div className="flex items-center gap-2">
             <div className="bg-gray-500 p-2 rounded-full">
-              <FaInstagram />
+              <a
+                href="https://www.instagram.com/fallahimouhcine/"
+                target="_blank"
+              >
+                <FaInstagram className="hover:text-myOrange" />
+              </a>
             </div>
             <div className="bg-gray-500 p-2 rounded-full">
-              <FaTwitter />
+              <a href="https://twitter.com/FallahiMouhcine" target="_blank">
+                <FaTwitter className="hover:text-myOrange" />
+              </a>
             </div>
             <div className="bg-gray-500 p-2 rounded-full">
-              <SlSocialVkontakte />
+              <a href="https://vk.com/cephalosporin" target="_blank">
+                <SlSocialVkontakte className="hover:text-myOrange" />
+              </a>
             </div>
           </div>
         </div>

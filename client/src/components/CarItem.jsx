@@ -10,7 +10,7 @@ const CarItem = ({ car }) => {
           onClick={() => navigate(`/car/${car._id}`)}
           src={car.imageUrls[0]}
           alt="photo of car"
-          className="w-full sm:w-60 sm:h-60 hover:scale-110 transition rounded-t-lg cursor-pointer"
+          className="w-full sm:w-60 sm:h-60 hover:scale-110 transition rounded-t-lg cursor-pointer min-h-32"
         />
       </div>
       <div className="flex flex-col gap-2 p-2">
@@ -26,15 +26,17 @@ const CarItem = ({ car }) => {
         <div className="sm:max-w-56">
           <p className="truncate">{car.description}</p>
         </div>
-        <p className="capitalize underline">{car.carModel}</p>
-        <span className="text-2xl font-semibold">
+        <p className="capitalize underline sm:max-w-56 truncate">
+          {car.carModel}
+        </p>
+        <span className="text-2xl font-semibold truncate">
           {car.price} {car.type === "rent" ? "$/month" : "$"}
         </span>
         <button
           onClick={() => navigate(`/car/${car._id}`)}
-          className=" bg-myOrangeWhite p-1 rounded-lg"
+          className=" bg-myOrangeWhite p-1 rounded-lg truncate"
         >
-          View details
+          Show details
         </button>
       </div>
     </div>

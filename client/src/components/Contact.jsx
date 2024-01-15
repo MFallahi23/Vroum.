@@ -29,7 +29,7 @@ const Contact = ({ car }) => {
 
           {user.phoneNumber && (
             <div className="">
-              Phone: <span>{ph}</span>
+              Phone: <span>{user.phoneNumber}</span>
             </div>
           )}
         </div>

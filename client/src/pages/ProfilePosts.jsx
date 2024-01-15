@@ -118,7 +118,7 @@ export default function ProfilePosts() {
                           {car.type}
                         </span>
                       </div>
-                      <p className=" text-slate-700 text-sm">
+                      <p className=" text-slate-700 text-sm max-h-[40px] overflow-scroll">
                         {car.description}
                       </p>
                       <p className="text-2xl mt-2">

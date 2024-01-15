@@ -80,15 +80,23 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-2">
               <FaPhoneAlt />
-              <span>+7123547484</span>
+              <span>+70000000</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <FaFacebookF />
-            <FaInstagram />
-            <FaTwitter />
-            <SlSocialVkontakte />
+            <a
+              href="https://www.instagram.com/fallahimouhcine/"
+              target="_blank"
+            >
+              <FaInstagram className="hover:text-myOrange" />
+            </a>
+            <a href="https://twitter.com/FallahiMouhcine" target="_blank">
+              <FaTwitter className="hover:text-myOrange" />
+            </a>
+            <a href="https://vk.com/cephalosporin" target="_blank">
+              <SlSocialVkontakte className="hover:text-myOrange" />
+            </a>
           </div>
         </div>
       </section>
@@ -104,7 +112,7 @@ const Header = () => {
             <div
               onClick={handleMenuClick}
               className={` menu flex flex-col gap-1 items-end cursor-pointer z-20 
-              ${menuClicked ? "translate-y-1" : ""}`}
+              ${menuClicked ? "translate-y-1 fixed right-2" : ""}`}
             >
               <div
                 className={`line1 w-[25px] h-[3px] bg-myOrange rounded-2xl transition ${
@@ -134,9 +142,6 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to={"/about"}>About Us</Link>
-                </li>
-                <li>
-                  <Link to={"/"}>Blog</Link>
                 </li>
               </ul>
 
@@ -191,7 +196,7 @@ const Header = () => {
                         <span>Profile</span>
                       </Link>
                       <div
-                        className="flex items-center gap-2 p-1 px-4 rounded-lg border border-red-600 text-red-600 font-semibold cursor-pointer"
+                        className="flex items-center gap-2 p-1 px-4 rounded-lg border  cursor-pointer"
                         onClick={handleSignOut}
                       >
                         <div className="">
@@ -217,9 +222,7 @@ const Header = () => {
                 <li>
                   <Link to={"/about"}>About Us</Link>
                 </li>
-                <li>
-                  <Link to={"/"}>Blog</Link>
-                </li>
+
                 <li>
                   <Link to={"/sign-in"}>Sign in</Link>
                 </li>
@@ -262,6 +265,7 @@ const Header = () => {
                   placeholder="search..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  className=" focus:outline-none"
                 />
                 <button>
                   <FaSearch className=" text-myOrange cursor-pointer" />
@@ -282,11 +286,7 @@ const Header = () => {
                     About Us
                   </Link>
                 </li>
-                <li>
-                  <Link onClick={() => setMenuClicked(false)} to={"/blog"}>
-                    Blog
-                  </Link>
-                </li>
+
                 <li>
                   <Link onClick={() => setMenuClicked(false)} to={"/sign-in"}>
                     Sign-in
@@ -298,14 +298,20 @@ const Header = () => {
             menuClicked && (
               <div className="fixed top-0 left-0 w-full h-full  z-10 bg-myWhite flex flex-col pt-48 items-center ">
                 <div className="flex items-center gap-3 my-8">
-                  <Link to={"/profile"} onClick={() => setMenuClicked(false)}>
+                  <Link
+                    to={"/profile/edit"}
+                    onClick={() => setMenuClicked(false)}
+                  >
                     <img
                       src={currentUser.avatar}
                       className="h-[50px] w-[50px] rounded-full"
                       alt=""
                     />
                   </Link>
-                  <Link to={"/profile"} onClick={() => setMenuClicked(false)}>
+                  <Link
+                    to={"/profile/edit"}
+                    onClick={() => setMenuClicked(false)}
+                  >
                     <h1 className=" text-xl">{currentUser.username}</h1>
                   </Link>
                 </div>
@@ -319,6 +325,7 @@ const Header = () => {
                     placeholder="search..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
+                    className=" focus:outline-none"
                   />
                   <button type="submit">
                     <FaSearch className=" text-myOrange cursor-pointer" />
@@ -339,11 +346,7 @@ const Header = () => {
                       About Us
                     </Link>
                   </li>
-                  <li>
-                    <Link onClick={() => setMenuClicked(false)} to={"/blog"}>
-                      Blog
-                    </Link>
-                  </li>
+
                   <li>
                     <div
                       className="flex items-center gap-2 p-1 px-4 rounded-lg border border-red-600 text-red-600 font-semibold cursor-pointer"

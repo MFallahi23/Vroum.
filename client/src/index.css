@@ -173,3 +173,104 @@
 
   border-bottom: 15px solid rgb(243 244 246);
 }
+
+.beforeLine {
+  width: 40px;
+  height: 1px;
+  background-color: rgb(253, 60, 51);
+}
+
+.orangeButton {
+  box-shadow: 0px 3px 12px rgba(253, 61, 51, 0.484);
+}
+.beforeWheel,
+.afterWheel {
+  position: relative;
+  width: 1px;
+  height: 1px;
+  /* border: 1px solid black; */
+}
+
+.beforeWheel::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  left: -30px;
+  top: 2px;
+  background-color: rgb(253, 60, 51);
+}
+.beforeWheel::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  left: -40px;
+  top: -4px;
+  background-color: rgb(253, 60, 51);
+}
+.afterWheel::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 3px;
+  left: 0px;
+  top: 2px;
+  background-color: rgb(253, 60, 51);
+}
+.afterWheel::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 3px;
+  left: 0px;
+  top: -4px;
+  background-color: rgb(253, 60, 51);
+}
+
+@media (min-width: 770px) {
+  .firstBox,
+  .secondBox {
+    position: relative;
+  }
+
+  .firstBox::after {
+    content: "";
+    position: absolute;
+    right: -225px;
+    top: 20px;
+    border-radius: 50%;
+    border: none;
+    border-top: 2px rgb(253, 60, 51) dashed;
+    width: 330px;
+    z-index: -1;
+    height: 60px;
+    padding: 40px 40px;
+    /* background-color: red; */
+    /* border: 1px dotted rgb(253, 60, 51); */
+  }
+
+  .secondBox::after {
+    content: "";
+    position: absolute;
+    right: -225px;
+    top: 0px;
+    border-radius: 50%;
+    border: none;
+    border-bottom: 2px rgb(253, 60, 51) dashed;
+    width: 330px;
+    z-index: -1;
+    height: 60px;
+    padding: 40px 40px;
+  }
+}
+
+.swiper-pagination-bullet-active {
+  width: 26px !important;
+  border-radius: 50px !important;
+  transition: 0.5s !important;
+}
+
+.slide img {
+  width: 100% !important;
+}

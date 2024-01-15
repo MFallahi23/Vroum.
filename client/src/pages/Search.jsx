@@ -40,7 +40,7 @@ const Search = () => {
     sort: "createdAt",
     order: "desc",
   });
-  console.log(sidebardata);
+
   const [loading, setLoading] = useState(false);
   const [cars, setCars] = useState([]);
   const [showMore, setShowMore] = useState(false);
@@ -142,7 +142,8 @@ const Search = () => {
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
     const res = await axios.get(`/api/car/get?${searchQuery}`);
-    const data = { res };
+    const { data } = res;
+
     if (data.length < 9) {
       setShowMore(false);
     }
@@ -286,6 +287,16 @@ const Search = () => {
               cars &&
               cars.map((car) => <CarItem key={car._id} car={car} />)}
           </div>
+          {showMore && (
+            <div className="w-full flex justify-center mt-8">
+              <button
+                onClick={onShowMoreClick}
+                className="text-green-700 hover:underline text-center"
+              >
+                Show more
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
