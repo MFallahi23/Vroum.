@@ -26,12 +26,12 @@
 
 1. Clone repo:  
 ```bash
-git clone [repo link]
+git clone https://github.com/MFallahi23/Vroum.
 ```
 2. Install dependencies:
 ```bash
-cd server && npm install
-cd ../client && npm install
+npm install
+cd /client && npm install
 ```
 3.Set environment variables in .env (MongoDB URI, JWT secret)
 4.Run server and client:
